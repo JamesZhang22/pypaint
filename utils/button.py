@@ -1,6 +1,6 @@
 from .settings import *
 
-class Button:
+class Buttons:
     def __init__(self, x: int, y: int, width: int, height: int, color: Tuple, text=None, text_color=BLACK, image=None) -> None:
         self.x = x
         self.y = y
@@ -14,7 +14,7 @@ class Button:
 
     def draw(self, screen: pygame.Surface) -> None:
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
-        pygame.draw.rect(screen, BLACK, (self.x, self.y, self.width, self.height), 2)
+        pygame.draw.rect(screen, self.text_color, (self.x, self.y, self.width, self.height), 2)
 
         if self.text:
             myfont = get_font(14)
