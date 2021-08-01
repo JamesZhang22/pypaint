@@ -22,7 +22,7 @@ class Buttons:
             screen.blit(text_surface, (self.x + self.width / 2 - text_surface.get_width() / 2, self.y + self.height / 2 - text_surface.get_height() / 2))
         if self.image:
             self.image_load = pygame.image.load(self.image)
-            screen.blit(self.image_load, (self.x + 9, self.y + 9))
+            screen.blit(self.image_load, (self.x + (self.width - self.image_load.get_width()) / 2, self.y + (self.height - self.image_load.get_height()) / 2))
 
 
     def clicked(self, pos: Tuple) -> bool:
