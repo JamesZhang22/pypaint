@@ -18,5 +18,3 @@ def load(file_name: str) -> List:
     new.append(row)
 
     return h, new[1:]
-a = load("swatch.png")
-print(len(a))
