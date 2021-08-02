@@ -60,10 +60,11 @@ def get_row_col_from_pos(pos: Tuple, rows: int, cols: int) -> Tuple:
     return row, col
 
 
-def main(rows: int, cols: int, grid_lines: bool) -> None:
+def main(rows: int, cols: int, grid_lines: bool, grid = None) -> None:
     running = True
     clock = pygame.time.Clock()
-    grid = get_grid(rows, cols, BG_COLOR)
+    if not grid:
+        grid = get_grid(rows, cols, BG_COLOR)
     drawing_color = BLACK
 
     button_y = HEIGHT - TOOLBAR_HEIGHT/2 - 25
@@ -93,6 +94,7 @@ def main(rows: int, cols: int, grid_lines: bool) -> None:
                 try:
                     row, col = get_row_col_from_pos(pos, rows, cols)
                     grid[row][col] = drawing_color
+                    # print(grid)
                 except IndexError:
                     for button in buttons:
                         if not button.clicked(pos):
@@ -113,25 +115,27 @@ def main(rows: int, cols: int, grid_lines: bool) -> None:
                         elif button.x == 375:
                             grid = get_grid(rows, cols, drawing_color)
                         elif button.x == 435:
-                            settings(rows, cols, grid_lines)
+                            settings(rows, cols, grid_lines, grid)
                         buttons[8].color = buttons[8].text_color = drawing_color
                         
         draw_main(SCREEN, grid, buttons, grid_lines, rows, cols)
 
 
-def settings(rows: int, cols: int, grid_lines: bool) -> None:
+def settings(rows: int, cols: int, grid_lines: bool, grid: List) -> None:
     running = True
     clock = pygame.time.Clock()
     settings_buttons = [
         Buttons(450, 20, 30, 30, GRAY, 1, None, BLACK, "images\close.png"),
         Buttons(165, 20, 170, 40, GRAY, 34, "Settings", BLACK),
-        Buttons(30, 90, 80, 40, GRAY, 24, "Size:", BLACK),
-        Buttons(160, 90, 50, 40, GRAY, 24, "10", BLACK),
-        Buttons(260, 90, 50, 40, GRAY, 24, "50", BLACK),
-        Buttons(360, 90, 50, 40, GRAY, 24, "100", BLACK),
-        Buttons(30, 160, 80, 40, GRAY, 24, "Grid:", BLACK),
-        Buttons(190, 160, 70, 40, GRAY, 24, "On", BLACK),
-        Buttons(260, 160, 70, 40, GRAY, 24, "Off", BLACK)
+        Buttons(30, 100, 80, 40, GRAY, 24, "Size:", BLACK),
+        Buttons(160, 100, 50, 40, GRAY, 24, "10", BLACK),
+        Buttons(260, 100, 50, 40, GRAY, 24, "50", BLACK),
+        Buttons(360, 100, 50, 40, GRAY, 24, "100", BLACK),
+        Buttons(30, 180, 80, 40, GRAY, 24, "Grid:", BLACK),
+        Buttons(190, 180, 70, 40, GRAY, 24, "On", BLACK),
+        Buttons(260, 180, 70, 40, GRAY, 24, "Off", BLACK),
+        Buttons(200, 260, 80, 40, GRAY, 24, "Save", BLACK),
+        Buttons(200, 340, 80, 40, GRAY, 24, "Load", BLACK)
     ]
     while running:
         clock.tick(FPS)
@@ -156,6 +160,11 @@ def settings(rows: int, cols: int, grid_lines: bool) -> None:
                         main(rows, cols, True)
                     elif button.text == "Off":
                         main(rows, cols, False)
+                    elif button.text == "Save":
+                        save(grid)
+                    elif button.text == "Load":
+                        img = load("pypaint.png")
+                        main(img[0], img[0], True, img[1])
                     elif button.x == 450:
                         running = False
 
