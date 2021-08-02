@@ -1,12 +1,14 @@
+from pygame import font
 from .settings import *
 
 class Buttons:
-    def __init__(self, x: int, y: int, width: int, height: int, color: Tuple, text=None, text_color=BLACK, image=None) -> None:
+    def __init__(self, x: int, y: int, width: int, height: int, color: Tuple, font_size: int, text=None, text_color=BLACK, image=None) -> None:
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.color = color
+        self.font_size = font_size
         self.text = text
         self.text_color = text_color
         self.image = image
@@ -17,7 +19,7 @@ class Buttons:
         pygame.draw.rect(screen, self.text_color, (self.x, self.y, self.width, self.height), 2)
 
         if self.text:
-            myfont = get_font(14)
+            myfont = get_font(self.font_size)
             text_surface = myfont.render(self.text, True, self.text_color)
             screen.blit(text_surface, (self.x + self.width / 2 - text_surface.get_width() / 2, self.y + self.height / 2 - text_surface.get_height() / 2))
         if self.image:
