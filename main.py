@@ -4,6 +4,8 @@ import sys
 
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("PyPaint")
+icon = pygame.image.load('images\paintbrush.png')
+pygame.display.set_icon(icon)
 pygame.mouse.set_cursor(*pygame.cursors.diamond)
 
 def get_grid(rows: int, cols: int, color: Tuple) -> List:
